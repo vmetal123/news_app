@@ -31,15 +31,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  EntriesBloc entriesBloc;
   @override
   Widget build(BuildContext context) {
+    entriesBloc = Provider.of<EntriesBloc>(context);
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
-        ),
+      body: Column(
+        children: <Widget>[
+          StreamBuilder<bool>(
+            stream: entriesBloc.loading,
+            builder: (context, loadingSnapshot) {
+              return StreamBuilder<List<Entry>>(
+                stream: entriesBloc.entries,
+                builder: (context, entriesSnapsht) {
+                  return Container();
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }
