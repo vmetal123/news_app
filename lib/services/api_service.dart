@@ -11,7 +11,7 @@ class ApiService {
 
   Future<List<Entry>> getEntries() async {
     
-    final response = await client.get("http://172.16.10.4/Api/api/app");
+    final response = await client.get("http://10.0.2.2/Api/api/app");
 
     List<Entry> entries;
 

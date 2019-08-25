@@ -1,15 +1,19 @@
 class Entry {
-  final String id, title, link;
+  final String id, title, link, imageUrl, previewHistory;
 
   Entry({
     this.id,
     this.title,
     this.link,
+    this.imageUrl,
+    this.previewHistory,
   });
 
   factory Entry.fromJson(Map<String, dynamic> json) => Entry(
-    id: json['Id'],
-    title: json['Title'],
-    link: json['Link'],
+    id: json['id'],
+    title: json['title'],
+    link: json['link'],
+    imageUrl: json['imageUrl'],
+    previewHistory: json['previewHistory']
   );
 }
