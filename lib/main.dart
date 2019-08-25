@@ -56,21 +56,29 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 32.0,
+              height: 16.0,
             ),
             Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0,),
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  'Informe Pastran App'.toUpperCase(),
-                  style: mainStyle,
-                  textAlign: TextAlign.center,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Ultimas noticias',
+                    style: mainStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Informe Pastran'.toUpperCase(),
+                    style: dateStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
             SizedBox(
-              height: 32.0,
+              height: 16.0,
             ),
             StreamBuilder<bool>(
               stream: entriesBloc.loading,
