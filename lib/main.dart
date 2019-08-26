@@ -49,26 +49,30 @@ class _MyHomePageState extends State<MyHomePage> {
     entriesBloc = Provider.of<EntriesBloc>(context);
     entriesBloc.getEntries();
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: secondColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 16.0,
+              height: 24.0,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0,),
+              padding: EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Ultimas noticias',
+                    'Noticias',
                     style: mainStyle,
                     textAlign: TextAlign.center,
                   ),
+                  SizedBox(height: 4.0,),
                   Text(
                     'Informe Pastran'.toUpperCase(),
                     style: dateStyle,
@@ -76,6 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 24.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Text('Ultimas', style: TextStyle(color: mainColor, fontWeight: FontWeight.bold),),
             ),
             SizedBox(
               height: 16.0,
@@ -95,7 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         enlargeCenterPage: true,
                         items: latesEntriesSnapshot.data.map((entry) {
                           return Container(
-                            padding: EdgeInsets.all(3.0),
+                            padding: EdgeInsets.all(2.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Stack(
@@ -135,7 +149,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: Text(
                                         '${entry.title}',
                                         style: TextStyle(color: Colors.white),
-                                        textAlign: TextAlign.justify,
                                       ),
                                     ),
                                   ),
@@ -150,6 +163,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 );
               },
+            ),
+            SizedBox(
+              height: 16.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Text('Todas', style: TextStyle(color: mainColor, fontWeight: FontWeight.bold),),
             ),
             SizedBox(
               height: 16.0,
@@ -169,81 +189,80 @@ class _MyHomePageState extends State<MyHomePage> {
                           scrollDirection: Axis.vertical,
                           itemCount: entriesSnapsht.data.length,
                           itemBuilder: (context, index) {
-                            return SizedBox(
-                              height: 100,
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                    left: 8.0, right: 8.0, bottom: 8.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black38,
-                                      offset: Offset(0, 0),
-                                      blurRadius: 4.0,
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    Container(
-                                      height: double.infinity,
-                                      width: 100.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(8.0),
-                                          bottomLeft: Radius.circular(8.0),
+                            return Container(
+                              margin: EdgeInsets.only(
+                                  left: 16.0, right: 16.0, bottom: 16.0),
+                              child: SizedBox(
+                                height: 100,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black38,
+                                        offset: Offset(0, 0.5),
+                                        blurRadius: 0.5,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(4.0),
+                                        height: double.infinity,
+                                        width: 100.0,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(8.0),
+                                            bottomLeft: Radius.circular(8.0),
+                                            topRight: Radius.circular(8.0),
+                                            bottomRight: Radius.circular(8.0),
+                                          ),
+                                          child: CachedNetworkImage(
+                                            imageUrl: entriesSnapsht
+                                                .data[index].imageUrl,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Center(
+                                                child:
+                                                    CircularProgressIndicator()),
+                                            errorWidget: (context, url, error) {
+                                              print(error);
+                                              return Icon(Icons.error);
+                                            },
+                                          ),
                                         ),
                                       ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(8.0),
-                                          bottomLeft: Radius.circular(8.0),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                '${entriesSnapsht.data[index].title}',
+                                                style:
+                                                    TextStyle(color: mainColor),
+                                              ),
+                                              SizedBox(
+                                                height: 10.0,
+                                              ),
+                                              Text(
+                                                '${entriesSnapsht.data[index].previewHistory.substring(0, 80)}...',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12.0),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        child: CachedNetworkImage(
-                                          imageUrl: entriesSnapsht
-                                              .data[index].imageUrl,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) => Center(
-                                              child:
-                                                  CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) {
-                                            print(error);
-                                            return Icon(Icons.error);
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              '${entriesSnapsht.data[index].title}',
-                                              style:
-                                                  TextStyle(color: mainColor),
-                                            ),
-                                            SizedBox(
-                                              height: 10.0,
-                                            ),
-                                            Text(
-                                              '${entriesSnapsht.data[index].previewHistory.substring(0, 80)}...',
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 12.0),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
